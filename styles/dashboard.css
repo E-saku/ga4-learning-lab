@@ -1,0 +1,483 @@
+/* GA4 インサイトガイド - ダッシュボード スタイル */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  --bg-base: #080d1a;
+  --bg-card: rgba(18, 26, 52, 0.8);
+  --bg-card-hover: rgba(25, 36, 70, 0.9);
+  --border: rgba(100, 130, 255, 0.15);
+  --border-hover: rgba(100, 130, 255, 0.4);
+  --accent-blue: #5c6bc0;
+  --accent-blue-light: #9fa8da;
+  --accent-orange: #ff8f00;
+  --accent-green: #43a047;
+  --accent-purple: #8e24aa;
+  --text-primary: #e8eaf6;
+  --text-secondary: rgba(180, 190, 230, 0.75);
+  --text-muted: rgba(120, 130, 160, 0.6);
+  --gradient-header: linear-gradient(135deg, #0d1333 0%, #1a1f4a 50%, #0d1333 100%);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(100, 130, 255, 0.08);
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Noto Sans JP', 'Inter', sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(63, 81, 181, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(123, 31, 162, 0.08) 0%, transparent 50%);
+}
+
+/* ===== ヘッダー ===== */
+.db-header {
+  background: var(--gradient-header);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(20px);
+}
+
+.db-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.db-header-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.db-logo-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #5c6bc0, #3949ab);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.5px;
+  box-shadow: 0 4px 16px rgba(63, 81, 181, 0.4);
+  flex-shrink: 0;
+}
+
+.db-header-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.db-header-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.db-header-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.db-btn-secondary {
+  padding: 8px 16px;
+  background: rgba(100, 130, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--accent-blue-light);
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.db-btn-secondary:hover {
+  background: rgba(100, 130, 255, 0.2);
+  border-color: var(--border-hover);
+  color: #fff;
+}
+
+/* ===== メイン ===== */
+.db-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* ===== ローディング ===== */
+.db-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 80px 20px;
+  color: var(--text-secondary);
+}
+
+.db-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(100, 130, 255, 0.2);
+  border-top-color: #5c6bc0;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== エラー ===== */
+.db-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 80px 20px;
+  color: rgba(255, 150, 150, 0.8);
+  text-align: center;
+}
+
+.db-error-icon { font-size: 40px; }
+
+/* ===== セクション ===== */
+.db-section {
+  margin-bottom: 40px;
+}
+
+.db-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.db-section-icon { font-size: 20px; }
+
+.db-section-badge {
+  font-size: 10px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #3949ab, #5c6bc0);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+}
+
+.db-table-count {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+/* ===== KPIカード ===== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.kpi-card.color-blue::before { background: linear-gradient(90deg, #3949ab, #5c6bc0); }
+.kpi-card.color-orange::before { background: linear-gradient(90deg, #e65100, #ff8f00); }
+.kpi-card.color-green::before { background: linear-gradient(90deg, #2e7d32, #43a047); }
+.kpi-card.color-purple::before { background: linear-gradient(90deg, #6a1b9a, #8e24aa); }
+.kpi-card.color-teal::before { background: linear-gradient(90deg, #00695c, #00897b); }
+.kpi-card.color-red::before { background: linear-gradient(90deg, #b71c1c, #e53935); }
+
+.kpi-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-hover);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(100, 130, 255, 0.2);
+}
+
+.kpi-card-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.kpi-card-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.kpi-card-tooltip-btn {
+  width: 14px;
+  height: 14px;
+  background: rgba(100, 130, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  color: rgba(150, 170, 255, 0.7);
+  font-size: 9px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.kpi-card-tooltip-btn:hover {
+  background: rgba(100, 130, 255, 0.4);
+  color: #fff;
+}
+
+.kpi-card-value {
+  font-size: 28px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.1;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.5px;
+}
+
+.kpi-card-unit {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-left: 2px;
+}
+
+/* ===== チャートグリッド ===== */
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+}
+
+.chart-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chart-canvas-wrapper {
+  position: relative;
+  height: 220px;
+}
+
+/* ===== データテーブル ===== */
+.db-table-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: auto;
+  box-shadow: var(--shadow-card);
+  max-height: 400px;
+}
+
+.db-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.db-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.db-table thead th {
+  background: rgba(20, 30, 70, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.db-table tbody tr {
+  border-bottom: 1px solid rgba(100, 130, 255, 0.06);
+  transition: background 0.15s;
+}
+
+.db-table tbody tr:hover {
+  background: rgba(100, 130, 255, 0.06);
+}
+
+.db-table tbody td {
+  padding: 11px 16px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.db-table tbody tr:first-child td {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.db-table .rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(100, 130, 255, 0.15);
+  color: var(--accent-blue-light);
+}
+
+.db-table .rank-badge.gold { background: rgba(255, 193, 7, 0.15); color: #ffc107; }
+.db-table .rank-badge.silver { background: rgba(180, 180, 180, 0.15); color: #bdbdbd; }
+.db-table .rank-badge.bronze { background: rgba(205, 127, 50, 0.15); color: #cd7f32; }
+
+/* ===== 用語クイックガイド ===== */
+.db-glossary-section {
+  margin-bottom: 20px;
+}
+
+.glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.glossary-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: default;
+}
+
+.glossary-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+.glossary-emoji { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+.glossary-content { flex: 1; min-width: 0; }
+
+.glossary-term {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+
+.glossary-summary {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ===== ツールチップ ===== */
+.db-tooltip {
+  position: fixed;
+  z-index: 9999;
+  max-width: 280px;
+  background: rgba(10, 14, 35, 0.97);
+  border: 1px solid rgba(100, 130, 255, 0.3);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s, transform 0.15s;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.db-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.db-tooltip strong {
+  display: block;
+  color: #fff;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+/* ===== レスポンシブ ===== */
+@media (max-width: 768px) {
+  .db-main { padding: 20px 16px; }
+  .db-header-inner { padding: 12px 16px; }
+  .db-header-title { font-size: 15px; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .chart-grid { grid-template-columns: 1fr; }
+  .glossary-grid { grid-template-columns: 1fr; }
+}

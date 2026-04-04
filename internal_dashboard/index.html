@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GA4 分析ダッシュボード - Internal</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-area">
+                <span class="icon">📈</span>
+                <h1>GA4 拡張機能分析</h1>
+            </div>
+            <div id="file-info" class="file-info"></div>
+            <div class="upload-area">
+                <label for="csv-upload" class="upload-btn">
+                    <span>CSVをロード</span>
+                    <input type="file" id="csv-upload" accept=".csv" hidden>
+                </label>
+            </div>
+        </header>
+
+        <main>
+            <!-- KPI Section -->
+            <section class="kpi-grid">
+                <div class="kpi-card blue">
+                    <span class="kpi-label">アクティブユーザー (当日)</span>
+                    <div class="kpi-value" id="kpi-users">-</div>
+                </div>
+                <div class="kpi-card pink">
+                    <span class="kpi-label">主要イベント発生数 (当日)</span>
+                    <div class="kpi-value" id="kpi-events">-</div>
+                </div>
+                <div class="kpi-card green">
+                    <span class="kpi-label">エンゲージメント率</span>
+                    <div class="kpi-value" id="kpi-engagement">-</div>
+                    <p class="kpi-desc">主要アクション / セッション数</p>
+                </div>
+                <div class="kpi-card yellow">
+                    <span class="kpi-label">継続率 (前日比)</span>
+                    <div class="kpi-value" id="kpi-retention">-</div>
+                    <p class="kpi-desc">前日とのユーザー維持率</p>
+                </div>
+            </section>
+
+            <!-- Chart Section -->
+            <section class="chart-grid">
+                <div class="chart-container line-chart">
+                    <h2>日次利用推移</h2>
+                    <canvas id="lineChart"></canvas>
+                </div>
+                <div class="chart-container bar-chart">
+                    <h2>イベント別パフォーマンス</h2>
+                    <canvas id="barChart"></canvas>
+                </div>
+            </section>
+        </main>
+
+        <div id="loading" class="hidden">処理中...</div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

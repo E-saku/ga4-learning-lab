@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "GA4 インサイトガイド",
+  "version": "1.0.0",
+  "description": "GA4の用語・指標をわかりやすく解説し、CSVデータからシンプルなダッシュボードを生成するChrome拡張機能",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "GA4 インサイトガイド"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://analytics.google.com/*"
+      ],
+      "js": [
+        "ga4_glossary.js",
+        "content_script.js"
+      ],
+      "css": [
+        "styles/floating_window.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dashboard.html",
+        "dashboard.js",
+        "styles/dashboard.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "activeTab"
+  ]
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GA4 ダッシュボード | インサイトガイド</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="styles/dashboard.css" />
+</head>
+<body>
+  <!-- ===== ヘッダー ===== -->
+  <header class="db-header">
+    <div class="db-header-inner">
+      <div class="db-header-logo">
+        <div class="db-logo-icon">G4</div>
+        <div>
+          <h1 class="db-header-title">GA4 インサイトダッシュボード</h1>
+          <p class="db-header-meta" id="db-meta">読み込み中...</p>
+        </div>
+      </div>
+      <div class="db-header-actions">
+        <button class="db-btn-secondary" id="btn-export">📥 HTMLで保存</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== メインコンテンツ ===== -->
+  <main class="db-main">
+
+    <!-- ローディング -->
+    <div class="db-loading" id="db-loading">
+      <div class="db-spinner"></div>
+      <p>データを解析中...</p>
+    </div>
+
+    <!-- エラー -->
+    <div class="db-error" id="db-error" style="display:none">
+      <span class="db-error-icon">⚠️</span>
+      <p id="db-error-msg">データの読み込みに失敗しました。</p>
+      <button class="db-btn-secondary" onclick="window.close()">閉じる</button>
+    </div>
+
+    <!-- ダッシュボード本体 -->
+    <div class="db-content" id="db-content" style="display:none">
+
+      <!-- KPIカードエリア -->
+      <section class="db-section">
+        <h2 class="db-section-title">
+          <span class="db-section-icon">📊</span>
+          主要指標サマリー
+          <span class="db-section-badge">KPI</span>
+        </h2>
+        <div class="kpi-grid" id="kpi-grid">
+          <!-- JSで動的生成 -->
+        </div>
+      </section>
+
+      <!-- チャートエリア -->
+      <section class="db-section">
+        <h2 class="db-section-title">
+          <span class="db-section-icon">📈</span>
+          データビジュアライゼーション
+        </h2>
+        <div class="chart-grid" id="chart-grid">
+          <!-- JSで動的生成 -->
+        </div>
+      </section>
+
+      <!-- データテーブル -->
+      <section class="db-section">
+        <h2 class="db-section-title">
+          <span class="db-section-icon">📋</span>
+          詳細データ
+          <span class="db-table-count" id="db-table-count"></span>
+        </h2>
+        <div class="db-table-wrapper">
+          <table class="db-table" id="db-table">
+            <thead id="db-table-head"></thead>
+            <tbody id="db-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 用語集リンク -->
+      <section class="db-section db-glossary-section">
+        <h2 class="db-section-title">
+          <span class="db-section-icon">💡</span>
+          GA4 用語クイックガイド
+        </h2>
+        <div class="glossary-grid" id="glossary-quick-grid">
+          <!-- JSで生成 -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- 用語解説ツールチップ -->
+  <div class="db-tooltip" id="db-tooltip"></div>
+
+  <script src="ga4_glossary.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

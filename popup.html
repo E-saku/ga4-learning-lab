@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GA4 インサイトガイド</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/popup.css" />
+</head>
+<body>
+  <div class="popup-container">
+    <!-- ヘッダー -->
+    <div class="popup-header">
+      <div class="popup-logo">
+        <div class="popup-logo-icon">G4</div>
+        <div class="popup-logo-text">
+          <span class="popup-title">GA4 インサイトガイド</span>
+          <span class="popup-subtitle">超初心者向け解説ツール</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 機能①：選択テキスト解説の説明 -->
+    <div class="popup-section">
+      <div class="popup-section-header">
+        <span class="popup-section-icon">💬</span>
+        <span class="popup-section-title">用語・数値の即時解説</span>
+      </div>
+      <p class="popup-description">
+        GA4の画面上でわからない言葉を<strong>マウスで選択</strong>するだけで、わかりやすい解説が表示されます。
+      </p>
+      <div class="popup-status" id="status-indicator">
+        <span class="status-dot active"></span>
+        <span>analytics.google.com で有効</span>
+      </div>
+    </div>
+
+    <div class="popup-divider"></div>
+
+    <!-- 機能②：CSVダッシュボード -->
+    <div class="popup-section">
+      <div class="popup-section-header">
+        <span class="popup-section-icon">📊</span>
+        <span class="popup-section-title">CSVダッシュボード生成</span>
+      </div>
+      <p class="popup-description">
+        GA4からエクスポートしたCSVファイルを読み込んで、<strong>わかりやすいダッシュボード</strong>を作成します。
+      </p>
+
+      <!-- ファイル選択エリア -->
+      <div class="file-drop-area" id="file-drop-area">
+        <input type="file" id="csv-file-input" accept=".csv" style="display:none" />
+        <div class="file-drop-content" id="file-drop-content">
+          <span class="file-drop-icon">📂</span>
+          <span class="file-drop-text">CSVファイルを選択</span>
+          <span class="file-drop-hint">クリックしてファイルを選ぶ</span>
+        </div>
+      </div>
+
+      <div class="file-selected" id="file-selected" style="display:none">
+        <span class="file-selected-icon">✅</span>
+        <span class="file-selected-name" id="file-selected-name"></span>
+        <button class="file-clear-btn" id="file-clear-btn">×</button>
+      </div>
+
+      <!-- ダッシュボード生成ボタン -->
+      <button class="btn-generate" id="btn-generate" disabled>
+        <span class="btn-icon">🚀</span>
+        ダッシュボードを生成
+      </button>
+
+      <!-- エラーメッセージ -->
+      <div class="error-message" id="error-message" style="display:none"></div>
+    </div>
+
+    <!-- フッター -->
+    <div class="popup-footer">
+      <span>© 2026 GA4 インサイトガイド</span>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
