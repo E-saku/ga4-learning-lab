@@ -97,3 +97,7 @@ export const noteMutationSchema = z.object({
   snapshotId: z.string().nullable().optional(),
   body: z.string().trim().min(1).max(5000)
 });
+
+export const siteCheckRequestSchema = z.object({
+  siteUrl: z.string().trim().min(4).max(500)
+});

@@ -89,6 +89,33 @@ export type WorkspaceSummary = {
   caption: string;
 };
 
+export type AiStatus = {
+  configured: boolean;
+  source: 'cookie' | 'env' | 'none';
+  model: string | null;
+};
+
+export type SiteCheckFinding = {
+  level: 'good' | 'warn' | 'info';
+  title: string;
+  detail: string;
+};
+
+export type SiteCheckResult = {
+  requestedUrl: string;
+  finalUrl: string;
+  statusCode: number;
+  title: string | null;
+  description: string | null;
+  canonicalUrl: string | null;
+  robots: string | null;
+  hasGtag: boolean;
+  hasGtm: boolean;
+  hasDataLayer: boolean;
+  measurementIds: string[];
+  findings: SiteCheckFinding[];
+};
+
 export type QuantitativeFinding = {
   title: string;
   evidence: string;

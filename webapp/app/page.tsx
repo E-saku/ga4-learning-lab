@@ -1,11 +1,14 @@
 import { HomeClient } from '@/components/home-client';
-import { isAiConfigured, isPersistenceConfigured } from '@/lib/server/env';
+import { isPersistenceConfigured } from '@/lib/server/env';
+import { getAiStatus } from '@/lib/server/gemini-settings';
 
-export default function HomePage() {
+export default async function HomePage() {
+  const aiStatus = await getAiStatus();
+
   return (
     <HomeClient
       initialHealth={{
-        aiConfigured: isAiConfigured(),
+        aiStatus,
         persistenceConfigured: isPersistenceConfigured()
       }}
     />

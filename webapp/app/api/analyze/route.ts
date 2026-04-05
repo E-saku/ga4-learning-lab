@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { analyzeRequestSchema } from '@/lib/ga4/schemas';
 import { buildLocalWorkspaceAnalysis } from '@/lib/ga4/insights';
 import { generateCoachAnalysis } from '@/lib/server/ai';
+import { getRuntimeAiSettings } from '@/lib/server/gemini-settings';
 import { incrementRateLimit, createDailyWindowKey } from '@/lib/server/rate-limit';
 import { resolveWorkspaceByToken } from '@/lib/server/workspaces';
 import { jsonError } from '@/lib/server/http';
@@ -29,7 +30,8 @@ export async function POST(request: Request) {
       }
     }
 
-    const result = await generateCoachAnalysis(payload.datasets, payload.answers);
+    const aiSettings = await getRuntimeAiSettings();
+    const result = await generateCoachAnalysis(payload.datasets, payload.answers, aiSettings);
     return NextResponse.json({
       ok: true,
       mode: result.mode,

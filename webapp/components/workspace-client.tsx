@@ -3,13 +3,15 @@
 import { upload } from '@vercel/blob/client';
 import { startTransition, useState } from 'react';
 import { AnalysisView } from '@/components/analysis-view';
+import { GeminiSettingsCard } from '@/components/gemini-settings-card';
 import { buildLocalWorkspaceAnalysis } from '@/lib/ga4/insights';
 import { parseGA4CSV } from '@/lib/ga4/parser';
-import type { DatasetSummary, UserAnswers, WorkspaceView } from '@/lib/ga4/types';
+import type { AiStatus, DatasetSummary, UserAnswers, WorkspaceView } from '@/lib/ga4/types';
 
 type WorkspaceClientProps = {
   initialView: WorkspaceView;
   workspaceToken: string;
+  initialAiStatus: AiStatus;
 };
 
 const DEFAULT_ANSWERS: UserAnswers = {
@@ -19,7 +21,7 @@ const DEFAULT_ANSWERS: UserAnswers = {
   concern: ''
 };
 
-export function WorkspaceClient({ initialView, workspaceToken }: WorkspaceClientProps) {
+export function WorkspaceClient({ initialView, workspaceToken, initialAiStatus }: WorkspaceClientProps) {
   const [view, setView] = useState(initialView);
   const [selectedSnapshotId, setSelectedSnapshotId] = useState(initialView.snapshots[0]?.id ?? null);
   const [files, setFiles] = useState<File[]>([]);
@@ -203,6 +205,8 @@ export function WorkspaceClient({ initialView, workspaceToken }: WorkspaceClient
               <p className="panel-description">作成日時: {formatDate(view.workspace.createdAt)}</p>
               <p className="panel-description">有効期限: {formatDate(view.workspace.expiresAt)}</p>
             </section>
+
+            <GeminiSettingsCard initialStatus={initialAiStatus} />
 
             <section className="glass-panel">
               <p className="section-kicker">Snapshots</p>

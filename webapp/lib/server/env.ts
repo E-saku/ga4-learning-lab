@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 const serverEnvSchema = z.object({
-  OPENAI_API_KEY: z.string().optional(),
-  OPENAI_MODEL: z.string().default('gpt-5.4-mini'),
+  GEMINI_API_KEY: z.string().optional(),
+  GEMINI_MODEL: z.string().default('gemini-2.5-flash'),
   BLOB_READ_WRITE_TOKEN: z.string().optional(),
   POSTGRES_URL: z.string().optional(),
   POSTGRES_URL_NON_POOLING: z.string().optional(),
@@ -11,8 +11,8 @@ const serverEnvSchema = z.object({
 });
 
 const parsedEnv = serverEnvSchema.parse({
-  OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-  OPENAI_MODEL: process.env.OPENAI_MODEL,
+  GEMINI_API_KEY: process.env.GEMINI_API_KEY,
+  GEMINI_MODEL: process.env.GEMINI_MODEL,
   BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN,
   POSTGRES_URL: process.env.POSTGRES_URL,
   POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING,
@@ -40,5 +40,5 @@ export function assertPersistenceConfigured() {
 }
 
 export function isAiConfigured() {
-  return Boolean(parsedEnv.OPENAI_API_KEY);
+  return Boolean(parsedEnv.GEMINI_API_KEY);
 }

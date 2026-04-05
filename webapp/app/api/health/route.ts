@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
-import { isAiConfigured, isPersistenceConfigured } from '@/lib/server/env';
+import { isPersistenceConfigured } from '@/lib/server/env';
+import { getAiStatus } from '@/lib/server/gemini-settings';
 
 export async function GET() {
+  const aiStatus = await getAiStatus();
   return NextResponse.json({
     ok: true,
-    aiConfigured: isAiConfigured(),
+    aiConfigured: aiStatus.configured,
+    aiSource: aiStatus.source,
+    aiModel: aiStatus.model,
     persistenceConfigured: isPersistenceConfigured()
   });
 }

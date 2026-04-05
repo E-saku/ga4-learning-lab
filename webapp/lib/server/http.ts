@@ -13,6 +13,29 @@ export async function getClientIpFromHeaders() {
   return headerStore.get('x-forwarded-for') ?? headerStore.get('x-real-ip');
 }
 
+export function assertSameOriginMutation(request: Request) {
+  const requestOrigin = new URL(request.url).origin;
+  const originHeader = request.headers.get('origin');
+  const refererHeader = request.headers.get('referer');
+
+  if (originHeader) {
+    if (originHeader !== requestOrigin) {
+      throw new Error('Cross-site request was rejected.');
+    }
+    return;
+  }
+
+  if (refererHeader) {
+    const refererOrigin = new URL(refererHeader).origin;
+    if (refererOrigin !== requestOrigin) {
+      throw new Error('Cross-site request was rejected.');
+    }
+    return;
+  }
+
+  throw new Error('Origin header is required.');
+}
+
 export function jsonError(message: string, status = 400) {
   return NextResponse.json({ ok: false, error: message }, { status });
 }

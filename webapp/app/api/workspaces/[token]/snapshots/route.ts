@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { generateCoachAnalysis } from '@/lib/server/ai';
 import { finalizeSnapshotSchema } from '@/lib/ga4/schemas';
 import { buildLocalWorkspaceAnalysis } from '@/lib/ga4/insights';
+import { getRuntimeAiSettings } from '@/lib/server/gemini-settings';
 import { getRequestOrigin, jsonError } from '@/lib/server/http';
 import { incrementRateLimit, createDailyWindowKey } from '@/lib/server/rate-limit';
 import { createSnapshotFromUploads, resolveWorkspaceByToken } from '@/lib/server/workspaces';
@@ -34,7 +35,8 @@ export async function POST(request: Request, { params }: SnapshotRouteProps) {
     }
 
     const localAnalysis = buildLocalWorkspaceAnalysis(payload.datasets, payload.answers);
-    const aiResult = await generateCoachAnalysis(payload.datasets, payload.answers);
+    const aiSettings = await getRuntimeAiSettings();
+    const aiResult = await generateCoachAnalysis(payload.datasets, payload.answers, aiSettings);
     const workspaceView = await createSnapshotFromUploads({
       workspaceToken: token,
       answers: payload.answers,
