@@ -71,6 +71,16 @@ main {
   align-items: end;
 }
 
+.hero-shell {
+  align-items: start;
+  padding-top: 38px;
+}
+
+.hero-copy-stack {
+  display: grid;
+  gap: 18px;
+}
+
 .hero-kicker,
 .section-kicker {
   margin: 0 0 8px;
@@ -104,6 +114,10 @@ main {
   line-height: 1.8;
 }
 
+.hero-actions {
+  margin-top: 4px;
+}
+
 .status-card,
 .glass-panel,
 .summary-card,
@@ -123,6 +137,41 @@ main {
 .status-card,
 .glass-panel {
   border-radius: var(--radius-xl);
+}
+
+.hero-guide-panel {
+  padding: 22px 24px;
+  border-radius: var(--radius-xl);
+  background: var(--bg-pane);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.hero-step-list {
+  display: grid;
+  gap: 14px;
+}
+
+.hero-step-item {
+  display: grid;
+  gap: 6px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.hero-step-item:first-of-type {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.hero-step-item strong {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.05rem;
+}
+
+.hero-step-item span {
+  color: var(--ink-soft);
+  line-height: 1.6;
 }
 
 .status-card {
@@ -155,6 +204,13 @@ main {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: 18px;
+}
+
+.top-workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  gap: 18px;
+  align-items: start;
 }
 
 .stack-18 {
@@ -268,6 +324,12 @@ main {
   color: var(--ink);
 }
 
+.inline-link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .primary-button:disabled,
 .secondary-button:disabled {
   opacity: 0.6;
@@ -290,6 +352,7 @@ main {
 .dataset-grid,
 .glossary-grid,
 .question-chip-grid,
+.site-check-grid,
 .card-grid-2,
 .card-grid-3 {
   display: grid;
@@ -298,6 +361,10 @@ main {
 
 .summary-grid {
   grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.site-check-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .summary-card,
@@ -339,6 +406,34 @@ main {
 .comparison-card {
   display: grid;
   gap: 8px;
+}
+
+.finding-row {
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.finding-row p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.finding-row.good {
+  border-color: rgba(17, 119, 99, 0.22);
+  background: rgba(17, 119, 99, 0.08);
+}
+
+.finding-row.warn {
+  border-color: rgba(183, 71, 71, 0.2);
+  background: rgba(183, 71, 71, 0.07);
+}
+
+.finding-row.info {
+  border-color: rgba(25, 33, 30, 0.1);
 }
 
 .route-card h3,
@@ -474,10 +569,12 @@ main {
 @media (max-width: 1080px) {
   .shell-header,
   .grid-2,
+  .top-workbench,
   .workspace-shell,
   .card-grid-2,
   .card-grid-3,
-  .summary-grid {
+  .summary-grid,
+  .site-check-grid {
     grid-template-columns: 1fr;
   }
 

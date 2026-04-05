@@ -3,13 +3,15 @@
 import { upload } from '@vercel/blob/client';
 import { startTransition, useDeferredValue, useState } from 'react';
 import { AnalysisView } from '@/components/analysis-view';
+import { GeminiSettingsCard } from '@/components/gemini-settings-card';
+import { SiteCheckCard } from '@/components/site-check-card';
 import { buildLocalWorkspaceAnalysis } from '@/lib/ga4/insights';
 import { parseGA4CSV } from '@/lib/ga4/parser';
-import type { DatasetSummary, LocalWorkspaceAnalysis, UserAnswers } from '@/lib/ga4/types';
+import type { AiStatus, DatasetSummary, LocalWorkspaceAnalysis, UserAnswers } from '@/lib/ga4/types';
 
 type HomeClientProps = {
   initialHealth: {
-    aiConfigured: boolean;
+    aiStatus: AiStatus;
     persistenceConfigured: boolean;
   };
 };
@@ -142,40 +144,81 @@ export function HomeClient({ initialHealth }: HomeClientProps) {
 
   return (
     <>
-      <header className="shell-header">
-        <div>
+      <header className="shell-header hero-shell">
+        <div className="hero-copy-stack">
           <p className="hero-kicker">GA4 Learning Lab</p>
-          <h1 className="hero-title">自分の GA4 データを読みながら、次に見るべき画面を学ぶ。</h1>
+          <h1 className="hero-title">サイト確認から GA4 CSV 解析まで、次にやることを順番に整理。</h1>
           <p className="hero-copy">
-            CSV をアップロードすると、定量サマリー、見るべき GA4 レポート、初心者向けの読み方をひとつの画面に整理します。
+            最初に公開サイト URL を確認して計測タグや noindex を見ます。その後に GA4 CSV を読み込み、初心者向けの言葉で、どの GA4 画面を開けばよいかまで案内します。
           </p>
+
+          <div className="button-row hero-actions">
+            <a className="primary-button inline-link-button" href="#site-check">
+              1. サイトを確認する
+            </a>
+            <a className="ghost-button inline-link-button" href="#csv-lab">
+              2. CSV を解析する
+            </a>
+            <a className="ghost-button inline-link-button" href="#ai-settings">
+              3. Gemini を設定
+            </a>
+          </div>
         </div>
 
-        <aside className="status-card">
-          <span className={`status-dot ${initialHealth.persistenceConfigured ? 'online' : 'offline'}`} />
-          <div>
-            <strong>{initialHealth.persistenceConfigured ? '保存機能を利用できます' : '保存機能は未設定です'}</strong>
-            <p className="status-copy">
-              {initialHealth.aiConfigured
-                ? 'OpenAI 連携あり。保存後のワークスペースでAIガイドを表示します。'
-                : 'OpenAI 未設定でもローカル解析で利用できます。'}
-            </p>
-          </div>
-        </aside>
+        <div className="stack-18">
+          <aside className="status-card">
+            <span className={`status-dot ${initialHealth.persistenceConfigured ? 'online' : 'offline'}`} />
+            <div>
+              <strong>{initialHealth.persistenceConfigured ? '保存機能を利用できます' : '保存機能は未設定です'}</strong>
+              <p className="status-copy">
+                {initialHealth.aiStatus.configured
+                  ? 'Gemini は利用可能です。キーはサーバー環境変数またはこのブラウザ専用の安全な保存領域から使われます。'
+                  : 'Gemini は任意です。未設定でもサイト確認とローカル解析は使えます。'}
+              </p>
+            </div>
+          </aside>
+
+          <section className="hero-guide-panel">
+            <p className="section-kicker">Quick Start</p>
+            <div className="hero-step-list">
+              <div className="hero-step-item">
+                <strong>1. 計測したいサイト URL を入れる</strong>
+                <span>公開ページのタグ設置、title、canonical、robots を先に確認</span>
+              </div>
+              <div className="hero-step-item">
+                <strong>2. GA4 CSV を読み込む</strong>
+                <span>集客、ページ、イベント、ブラウザなど複数 CSV をまとめて解析</span>
+              </div>
+              <div className="hero-step-item">
+                <strong>3. 必要なら Gemini を追加</strong>
+                <span>このブラウザだけで AI の説明を厚くする。未設定でも利用可能</span>
+              </div>
+            </div>
+          </section>
+        </div>
       </header>
 
       <main>
-        <section className="grid-2">
+        <section className="section-block top-workbench">
+          <SiteCheckCard />
+          <GeminiSettingsCard
+            initialStatus={initialHealth.aiStatus}
+            sectionId="ai-settings"
+            kicker="Optional"
+          />
+        </section>
+
+        <section className="grid-2" id="csv-lab">
           <section className="glass-panel">
-            <p className="section-kicker">Step 1</p>
+            <p className="section-kicker">Step 2</p>
             <h2 className="panel-title">GA4 CSV を読み込む</h2>
             <p className="panel-description">
-              集客、ページ、イベント、ブラウザなど複数の GA4 CSV をまとめて読み込めます。
+              集客、ページ、イベント、ブラウザなど複数の GA4 CSV をまとめて読み込めます。読み込んだ瞬間にローカル解析が走り、まず見るべきレポートの候補が下に出ます。
             </p>
 
             <label className={`dropzone ${isParsing ? 'dragging' : ''}`} htmlFor="csv-input">
               <strong>CSV をドラッグするか、クリックして選択</strong>
-              <span className="muted">GA4 からエクスポートした CSV をそのまま読み込めます</span>
+              <span className="muted">GA4 からエクスポートした CSV をそのまま読み込めます。最大 5 件、各 10MB までです。</span>
             </label>
             <input
               id="csv-input"
@@ -227,9 +270,11 @@ export function HomeClient({ initialHealth }: HomeClientProps) {
           </section>
 
           <section className="glass-panel">
-            <p className="section-kicker">Step 2</p>
+            <p className="section-kicker">Step 3</p>
             <h2 className="panel-title">今の目的を教えてください</h2>
-            <p className="panel-description">この回答をもとに、見るべき GA4 レポートと読み方を切り替えます。</p>
+            <p className="panel-description">
+              「何を改善したいか」を選ぶと、同じ CSV でも案内内容が変わります。用語は初心者向けに平易にしてあるので、そのまま選べば大丈夫です。
+            </p>
 
             <div className="field-grid">
               <label className="field">
@@ -301,9 +346,9 @@ export function HomeClient({ initialHealth }: HomeClientProps) {
           <section className="section-block">
             <div className="glass-panel">
               <p className="section-kicker">Preview</p>
-              <h2 className="panel-title">CSV を読み込むとここに解析結果が出ます</h2>
+              <h2 className="panel-title">CSV を読み込むと、ここに次の確認ポイントが出ます</h2>
               <p className="panel-description">
-                まずは 1 つ以上の CSV を選択してください。ローカル解析は OpenAI 未設定でも動作します。
+                まずは Step 2 で CSV を選択してください。Gemini が未設定でも、定量サマリーと見るべき GA4 レポートまではローカル解析で表示されます。
               </p>
             </div>
           </section>
